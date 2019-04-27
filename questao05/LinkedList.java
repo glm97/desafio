@@ -26,8 +26,8 @@ public class LinkedList {
 		}
 	}
 	
-	public void removeDuplicate(LinkedList lista) {
-		Node currentNode = lista.head;
+	public void removeDuplicate(Node head) {
+		Node currentNode = head;
 		Node nextNode = currentNode.next;
 		Node prevNode = currentNode;
 		while(currentNode != null) {

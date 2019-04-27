@@ -19,7 +19,7 @@ public class Main {
 		System.out.println("This is the initial list: ");
 		lista.printList(lista);
 		System.out.println("\n");
-		lista.removeDuplicate(lista);
+		lista.removeDuplicate(lista.head);
 		System.out.println("After removing the duplicates this is the list now: ");
 		lista.printList(lista);
 
