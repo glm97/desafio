@@ -69,14 +69,52 @@ public class MainActivity extends AppCompatActivity {
     private boolean isPartiallyPermuted(String astr, String bstr) {
         char[] astrArray = astr.toCharArray();
         char[] bstrArray = bstr.toCharArray();
+        boolean typo = false;
         boolean partialPermutation = false;
-        int count = 0;
-        if(astrArray[0] == bstrArray[0] && astrArray.length == bstrArray.length) if (astrArray.length > 3) {
-            for (int i = 0; i < astrArray.length; i++)
-                if (astrArray[i] != bstrArray[i]) count += 1;
-            if (count > 0) partialPermutation = count < ((astrArray.length * 2) / 3);
-        } else {
-            partialPermutation = astrArray[1] == bstrArray[2];
+        if(astrArray[0] == bstrArray[0] && astrArray.length == bstrArray.length) {
+            if (astrArray.length > 3) {
+                int count = 0;
+                int eq = 0;
+                char[] auxl = bstrArray.clone();
+                for (int x = 0; x < astrArray.length; x++) {
+                    for (int y = 0; y < auxl.length; y++) {
+                        if (astrArray[x] == auxl[y] && x != y) {
+                            char aux = auxl[x];
+                            auxl[x] = auxl[y];
+                            auxl[y] = aux;
+                        }
+                    }
+                }
+                for (int z = 0; z < astrArray.length; z++) {
+                    if (astrArray[z] != auxl[z]) {
+                        typo = true;
+                    }
+                }
+                if (typo != true) {
+                    for (int a = 0; a < astrArray.length; a++) {
+                        for (int b = a; b < bstrArray.length; b++) {
+                            if ((astrArray[a] == astrArray[b]) && (a != b)) {
+                                eq += 1;
+                            }
+                        }
+                    }
+                    for (int i = 0; i < astrArray.length; i++) {
+                        for (int j = 0; j < bstrArray.length; j++) {
+                            if ((astrArray[i] == bstrArray[j]) && (i != j)) {
+                                count += 1;
+                            }
+                        }
+                    }
+                    count = count - (eq * 2);
+                    if ((count > 0) && (count < ((astrArray.length * 2) / 3))) {
+                        partialPermutation = true;
+                    }
+                }
+            } else {
+                if (astrArray[1] == bstrArray[2]) {
+                    partialPermutation = true;
+                }
+            }
         }
             return partialPermutation;
     }
@@ -94,9 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         c += 1;
                     }
                 }
-                if ((c > 1) || (c == 0)) {
-                    typo = false;
-                } else {
+                if (c == 1) {
                     typo = true;
                 }
             }
